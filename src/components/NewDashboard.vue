@@ -15,7 +15,7 @@
         <v-layout row class="xs12 sm6">
           <!-- *************** AMAZON CARD STARTS ******************* -->
           <v-card class="mx-auto ma-auto my-5 elevation-20">
-            <v-avatar size="80">
+            <v-avatar size="80" style="margin-left:70px">
               <img src="../assets/amazon.png" />
             </v-avatar>
             <v-card-title>Amazon</v-card-title>
@@ -23,6 +23,8 @@
               <v-text-field
                 label="Enter URL"
                 variant="outlined"
+                class="zoomable-text-field"
+
                 max-width="10"
                 v-model="url"
                 :rules="[
@@ -83,7 +85,7 @@
 
           <!-- *************** REDDIT CARD STARTS ******************* -->
           <v-card class="mx-auto ma-auto my-5 elevation-20">
-            <v-avatar size="80">
+            <v-avatar size="80" style="margin-left:60px">
               <img src="../assets/reddit.png" />
             </v-avatar>
             <v-card-title>Reddit</v-card-title>
@@ -91,6 +93,8 @@
               <v-text-field
                 label="Enter URL"
                 variant="outlined"
+                class="zoomable-text-field"
+
                 max-width="10"
                 v-model="RedditURL"
                 :rules="[
@@ -115,6 +119,9 @@
                   >
                     Scrap
                   </v-btn>
+                  <v-btn class="warning mx-5" to="/RedditList"
+                  >Scrap List</v-btn
+                >
                 </template>
                 <template v-slot:default="Redditdialog">
                   <PageLoader />
@@ -147,12 +154,14 @@
 
           <!-- *************** EBAY CARD STARTS ******************* -->
           <v-card class="mx-auto ma-auto my-5 elevation-20">
-            <v-avatar size="80">
+            <v-avatar size="80"  style="margin-left:70px">  
               <img src="../assets/ebay.png" />
             </v-avatar>
             <v-card-title>E-Bay </v-card-title>
             <v-card-text>
               <v-text-field
+              class="zoomable-text-field"
+
                 label="Enter URL"
                 variant="outlined"
                 max-width="10"
@@ -210,7 +219,7 @@
           <!-- *************** EBAY CARD ENDS ******************* -->
           <!-- *************** YELP CARD STARTS ******************* -->
           <v-card class="mx-auto ma-auto my-5 elevation-20" width="200">
-            <v-avatar size="80" class="mx-auto justify-center">
+            <v-avatar size="80" style="margin-left:60px">
               <!-- Add 'mx-auto' class to center the image -->
               <img src="../assets/yelp.png" />
             </v-avatar>
@@ -244,6 +253,8 @@
             <v-text-field
               label="Enter URL"
               variant="outlined"
+              class="zoomable-text-field-others"
+
               max-width="10"
               :rules="[
                 (v) => !!v || 'URL is required',
@@ -291,22 +302,23 @@
           </v-card-actions>
           <!-- *****list**** -->
           <!-- *************** OTHER LINKS DIALOG END ******************* -->
-          <!-- ****** SNAKBAR STARTS ***** -->
-          <v-snackbar v-model="snackbar">
-            Website does not allow scrapping
-
-            <template v-slot:actions>
-              <v-btn color="pink" variant="text" @click="snackbar = false">
-                Close
-              </v-btn>
-            </template>
-          </v-snackbar>
-          <!-- ****** SNAKBAR ENDS ***** -->
+        
         </v-card>
         <!-- *************** OTHER LINKS SECTION ENDS ******************* -->
       </v-container>
     <!-- </v-parallax> -->
     </v-img>
+      <!-- ****** SNAKBAR STARTS ***** -->
+      <v-snackbar v-model="snackbar" >
+        Website does not allow scrapping
+
+        <template v-slot:actions>
+          <v-btn color="pink" variant="text" @click="snackbar = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+      <!-- ****** SNAKBAR ENDS ***** -->
   </div>
 </template>
 
@@ -378,7 +390,7 @@ export default {
           const html = response.data;
           const $ = cheerio.load(html);
           this.AmazonName = $("h1").text();
-          this.Amazonprice = $("span.a-price").text().substring(0, 6);
+          this.Amazonprice = $("span.a-price").text();
 
           this.Amazonimage = $("img.imageLeft0").attr("src");
           console.log("Price :", this.Amazonprice);
@@ -450,8 +462,8 @@ export default {
             this.scrapedData.detail == undefined
           ) {
             console.log("Empty");
-            this.OtherDialog = false;
             this.snackbar = true;
+            this.OtherDialog = false;
           } else {
             console.log("sadasd", this.scrapedData);
             this.snackbar = false;
@@ -494,5 +506,19 @@ export default {
   .parallax-image {
     display: none;
   }
+}
+.zoomable-text-field {
+  transition: transform 0.3s ease;
+}
+
+.zoomable-text-field:hover {
+  transform: scale(1.05); /* Adjust the zoom level as desired */
+}
+.zoomable-text-field-others {
+  transition: transform 0.3s ease;
+}
+
+.zoomable-text-field-others:hover {
+  transform: scale(1.01); /* Adjust the zoom level as desired */
 }
 </style>

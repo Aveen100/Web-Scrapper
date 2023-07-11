@@ -23,6 +23,8 @@
             variant="outlined"
             max-width="10"
             v-model="url"
+            class="zoomable-text-field"
+
             :rules="[
               rules1.required,
               (v) =>
@@ -36,6 +38,8 @@
             max-width="10"
             v-model="pageurl"
             required
+            class="zoomable-text-field"
+
             :rules="[(v) => !!v || 'This field is required']"
           ></v-text-field>
         </v-card-text>
@@ -177,20 +181,23 @@ if (!value) {
       );
     },
     loadPage() {
-      this.showPageLoader = true; // Show the PageLoader component
-      // Perform any other necessary operations or async requests
+        if(this.url && this.pageurl){
 
-      const checkStopLoad = () => {
-        if (this.showcard) {
-          setTimeout(checkStopLoad, 100); // Check again after 100 milliseconds
-        } else {
-          this.showPageLoader = false; // Hide the PageLoader component
-        }
-      };
-
-      // Start checking the condition
-      checkStopLoad();
-    },
+        
+        this.showPageLoader = true; // Show the PageLoader component
+        // Perform any other necessary operations or async requests
+  
+        const checkStopLoad = () => {
+          if (!this.stopload) {
+            setTimeout(checkStopLoad, 100); // Check again after 100 milliseconds
+          } else {
+            this.showPageLoader = false; // Hide the PageLoader component
+          }
+        };
+        checkStopLoad();
+    }
+        // Start checking the condition
+      },
   },
 };
 </script>
@@ -198,5 +205,12 @@ if (!value) {
 .custom-table .v-data-table-header th {
   background-color: #ffc107;
   color: black;
+}
+.zoomable-text-field {
+  transition: transform 0.3s ease;
+}
+
+.zoomable-text-field:hover {
+  transform: scale(1.05); /* Adjust the zoom level as desired */
 }
 </style>

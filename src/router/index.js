@@ -6,13 +6,14 @@ import HomePage from '../views/HomePage.vue'
 import AmazonList from '../views/AmazonList.vue'
 import EbayList from '../views/EbayList.vue'
 import YelpList from '../views/YelpList.vue'
+import RedditList from '../views/RedditList.vue'
 import IndexPage from '../views/IndexPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/login',
+    path: '/',
     name: 'login',
     component: LoginView
   },
@@ -40,6 +41,11 @@ const routes = [
     path: '/YelpList',
     name: 'YelpList',
     component: YelpList
+  },
+  {
+    path: '/RedditList',
+    name: 'RedditList',
+    component: RedditList
   },
   {
     path: '/IndexPage',

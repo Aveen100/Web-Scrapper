@@ -25,7 +25,7 @@ export default {
       const value = localStorage.getItem('user');
 
 if (!value) {
-  this.$router.push('/login'); // Redirect to login view page
+  this.$router.push('/'); // Redirect to login view page
 }   
    },
  
